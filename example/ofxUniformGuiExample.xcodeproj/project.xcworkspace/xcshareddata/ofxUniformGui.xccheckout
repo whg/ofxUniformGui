@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>IDESourceControlProjectFavoriteDictionaryKey</key>
+	<false/>
+	<key>IDESourceControlProjectIdentifier</key>
+	<string>FE5C6767-1E3C-4045-9A5F-272764D6351A</string>
+	<key>IDESourceControlProjectName</key>
+	<string>ofxUniformGui</string>
+	<key>IDESourceControlProjectOriginsDictionary</key>
+	<dict>
+		<key>F4F5ACE9D115CCC9F370215A3BC148483EC2FF6B</key>
+		<string>https://github.com/whg/blobs1.git</string>
+	</dict>
+	<key>IDESourceControlProjectPath</key>
+	<string>ofxUniformGui.xcodeproj</string>
+	<key>IDESourceControlProjectRelativeInstallPathDictionary</key>
+	<dict>
+		<key>F4F5ACE9D115CCC9F370215A3BC148483EC2FF6B</key>
+		<string>../..</string>
+	</dict>
+	<key>IDESourceControlProjectURL</key>
+	<string>https://github.com/whg/blobs1.git</string>
+	<key>IDESourceControlProjectVersion</key>
+	<integer>111</integer>
+	<key>IDESourceControlProjectWCCIdentifier</key>
+	<string>F4F5ACE9D115CCC9F370215A3BC148483EC2FF6B</string>
+	<key>IDESourceControlProjectWCConfigurations</key>
+	<array>
+		<dict>
+			<key>IDESourceControlRepositoryExtensionIdentifierKey</key>
+			<string>public.vcs.git</string>
+			<key>IDESourceControlWCCIdentifierKey</key>
+			<string>F4F5ACE9D115CCC9F370215A3BC148483EC2FF6B</string>
+			<key>IDESourceControlWCCName</key>
+			<string>example</string>
+		</dict>
+	</array>
+</dict>
+</plist>
