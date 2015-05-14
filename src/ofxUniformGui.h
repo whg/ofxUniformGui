@@ -3,9 +3,7 @@
 //  Created by Will Gallia on 12/05/2015.
 //
 
-
 #pragma once
-
 
 #include "ofxGui.h"
 

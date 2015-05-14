@@ -1,7 +1,6 @@
 #pragma once
 
 #include "ofMain.h"
-
 #include "ofxGui.h"
 
 #include "ofxUniformGui.h"
@@ -16,7 +15,6 @@ struct Thing {
     
     void update() {
         pos+= vel;
-        
         
         if (pos.x < 0 || pos.x > ofGetWidth()) vel.x*= -1;
         if (pos.y < 0 || pos.y > ofGetHeight()) vel.y*= -1;

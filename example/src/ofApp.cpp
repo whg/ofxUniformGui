@@ -24,7 +24,7 @@ void ofApp::update() {
     }
     
     if (tex.getWidth() < things.size()) {
-        ofLogError() << "agent texture not big enough!";
+        ofLogError() << "thing texture not big enough!";
         ofExit();
     }
 

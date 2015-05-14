@@ -1,19 +1,16 @@
 //
 //  ofxUniformGui.cpp
-//  emptyExample
 //
 //  Created by Will Gallia on 12/05/2015.
-//
 //
 
 #include "ofxUniformGui.h"
 
-
 #include "ofShader.h"
 #include "Poco/RegularExpression.h"
 
-
 using Poco::RegularExpression;
+
 
 ofxUniformGui::ofxUniformGui() {
     panel.setup("Shader Uniforms");
@@ -50,6 +47,9 @@ void ofxUniformGui::addShader(ofShader &shader, string filename) {
             float max = atof(values["max"].c_str());
             
             if (values["type"].find("vec") == string::npos) {
+                
+                // primitive types
+            
                 if (values["type"] == "int") {
                     int def = atoi(values["default"].c_str());
                     add(filename, values["name"], def, min, max);
