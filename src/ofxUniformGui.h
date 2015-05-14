@@ -12,10 +12,10 @@
 
 class ofxUniformGui {
 public:
+    ofxUniformGui();
+    
     ofxPanel panel;
-    
-    ofxUniformGui() {}
-    
+        
     void addShader(ofShader &shader, string filename);
     
     ofParameterGroup& getShader(string name);
@@ -26,7 +26,7 @@ public:
 
     template <typename T>
     void add(string filename, string name, T defaultValue, float min, float max) {
-        shaders[filename].second.push_back(new ofParameter<float>(name, defaultValue, min, max));
+        shaders[filename].second.push_back(new ofParameter<T>(name, defaultValue, T(min), T(max)));
     }
     
     

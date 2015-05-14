@@ -7,16 +7,16 @@ uniform vec2 texsize;
 uniform vec2 windowSize;
 uniform float time;
 
-uniform float stickyness = 2.1; // 0.01-10.0
+uniform float stickyness = 2.1; // 10.0-0.1
 uniform float sizeMultiplier = 0.2;// 0.01 - 0.5
-
+uniform vec2 distEdges = vec2(0.1, 0.9); // 0.0 - 1.0
 
 float dist(vec3 blob, float size, float varianceInverse){
     vec2 p = gl_FragCoord.xy / windowSize;
     float d = distance(p, blob.xy);
 
     d/=size;
-    return exp(-varianceInverse * d*d);
+    return exp(-varianceInverse * d*d) * 0.2;
 }
 
 
@@ -37,7 +37,7 @@ void main() {
 
     }
 
-    float v = smoothstep(0.1, 0.9, dist);
+    float v = smoothstep(distEdges.x, distEdges.y, dist);
 
     
     gl_FragColor = vec4(vec3(0.0), v);// + specColor;

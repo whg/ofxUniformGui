@@ -15,6 +15,9 @@
 
 using Poco::RegularExpression;
 
+ofxUniformGui::ofxUniformGui() {
+    panel.setup("Shader Uniforms");
+}
 
 void ofxUniformGui::addShader(ofShader &shader, string filename) {
     
@@ -25,7 +28,7 @@ void ofxUniformGui::addShader(ofShader &shader, string filename) {
     static string tokens[] = { "line", "type", "name", "default", "min", "max" };
     static int NTOKENS = 6;
     
-    RegularExpression re("^\\s*uniform\\s+([^\\s]+)\\s+([^\\s;]+)\\s*=\\s*([0-9.]+)\\s*;\\s*//[\\sa-zA-z]*([0-9.]+)\\s*-\\s*([0-9.]+).*$");
+    RegularExpression re("^\\s*uniform\\s+([^\\s]+)\\s+([^\\s;]+)\\s*=\\s*([vec0-9., ()]+)\\s*;\\s*//[\\sa-zA-z]*([0-9.]+)\\s*-\\s*([0-9.]+).*");
     vector<RegularExpression::Match> matches;
     
     string line;
@@ -43,46 +46,51 @@ void ofxUniformGui::addShader(ofShader &shader, string filename) {
                 values[tokens[i]] = line.substr(matches[i].offset, matches[i].length);
             }
             
+            ofLogNotice() << line;
             
             float min = atof(values["min"].c_str());
             float max = atof(values["max"].c_str());
             
-            if (values["type"] == "int") {
-                int def = atoi(values["default"].c_str());
-                add(filename, values["name"], def, min, max);
+            if (values["type"].find("vec") == string::npos) {
+                if (values["type"] == "int") {
+                    int def = atoi(values["default"].c_str());
+                    add(filename, values["name"], def, min, max);
+                }
+                else if (values["type"] == "float") {
+                    float def = atof(values["default"].c_str());
+                    add(filename, values["name"], def, min, max);
+                }
             }
-            else if (values["type"] == "float") {
-                float def = atof(values["default"].c_str());
-                add(filename, values["name"], def, min, max);
+            else {
+                if (values["type"] == "vec2") {
+                    RegularExpression vec2Re("vec2\\(([0-9.]+)\\s*,\\s*([0-9.]+)\\)");
+                    vec2Re.match(values["default"], 0, matches);
+                    
+                    if (matches.size() >= 3) {
+                        string smin = values["default"].substr(matches[1].offset, matches[1].length);
+                        string smax = values["default"].substr(matches[2].offset, matches[2].length);
+                        ofVec2f def(atof(smin.c_str()), atof(smax.c_str()));
+                        
+                        add(filename, values["name"], def, min, max);
+                    }
+                    else {
+                        ofLogError() << "can't get default values of vec2 " << values["name"];
+                    }
+                    
+                }
             }
+            
+            
             
         }
     }
     
-    panel.setup("Shader Uniforms");
-//    for (auto param : params) {
-//        string filename = param.first;
-//        auto parameterList = param.second;
-//        
-//        ofParameterGroup paramGroup;
-//        paramGroup.setName(filename);
-//        for (auto p : parameterList) {
-//            paramGroup.add(*p);
-//        }
-//        panel.add(paramGroup);
-//
-//    }
 
     ofParameterGroup paramGroup;
     paramGroup.setName(filename);
 
     for (auto param : shaders[filename].second) {
-
-//        for (auto p : parameterList) {
         paramGroup.add(*param);
-//        }
-
-        
     }
     panel.add(paramGroup);
 
@@ -98,8 +106,13 @@ void ofxUniformGui::update() {
         vector<ofAbstractParameter*> params = fandp.second.second;
         
         for (auto param : params) {
-            ofParameter<float> *p = (ofParameter<float>*) param;
-            shader->setUniform1f(p->getName(), p->get());
+            
+            if (ofParameter<float> *fp = dynamic_cast< ofParameter<float>* >(param)) {
+                shader->setUniform1f(fp->getName(), fp->get());
+            }
+        
+//            ofParameter<float> *p = (ofParameter<float>*) param;
+//            shader->setUniform1f(p->getName(), p->get());
         }
     }
 }
