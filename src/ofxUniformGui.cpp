@@ -37,8 +37,6 @@ void ofxUniformGui::addShader(ofShader &shader, string filename) {
     
         re.match(line, 0, matches);
         
-        
-        
         if (matches.size() >= NTOKENS) {
             
             map<string, string> values;
@@ -107,12 +105,14 @@ void ofxUniformGui::update() {
         
         for (auto param : params) {
             
+            string name = param->getName();
             if (ofParameter<float> *fp = dynamic_cast< ofParameter<float>* >(param)) {
-                shader->setUniform1f(fp->getName(), fp->get());
+                shader->setUniform1f(name, fp->get());
+            }
+            else if (ofParameter<ofVec2f> *v2p = dynamic_cast< ofParameter<ofVec2f>* >(param)) {
+                shader->setUniform2f(name, v2p->get());
             }
         
-//            ofParameter<float> *p = (ofParameter<float>*) param;
-//            shader->setUniform1f(p->getName(), p->get());
         }
     }
 }
