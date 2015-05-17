@@ -9,6 +9,7 @@
 class ofxUniformGuiShader : public ofShader {
     
 public:
+    bool load(string shaderName);
     bool load(string vertName, string fragName, string geomName="");
     
     void begin() const;

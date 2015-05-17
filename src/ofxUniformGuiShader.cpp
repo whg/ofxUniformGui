@@ -10,6 +10,9 @@
 
 #include "ofxUniformGui.h"
 
+bool ofxUniformGuiShader::load(string shaderName) {
+    return load(shaderName + ".vert", shaderName + ".frag");
+}
 
 bool ofxUniformGuiShader::load(string vertName, string fragName, string geomName) {
     cout << "loaded ofxUniformGuiShader" << endl;
