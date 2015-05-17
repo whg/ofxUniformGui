@@ -19,8 +19,6 @@ public:
     ofParameterGroup& getShader(string name);
     
     map<const ofShader*, std::pair<string, vector<ofAbstractParameter*> > > shaders;
-//    map<string, vector<ofAbstractParameter*> > params;
-
 
     template <typename T>
     void add(const ofShader *shader, string name, T defaultValue, float min, float max) {

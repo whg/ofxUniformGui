@@ -18,15 +18,12 @@ static ofxUniformGui *uniformGui = NULL;
 //shared_ptr<ofxUniformGui> uniformGui;
 
 ofxUniformGui::ofxUniformGui() {
-    panel.setup("Shader Uniforms");
+    panel.setup("Shader Uniforms", "shader-uniforms.xml");
     
-//
     ofAddListener(ofEvents().draw, this, &ofxUniformGui::draw);
     ofAddListener(ofEvents().exit, this, &ofxUniformGui::exit);
     ofRegisterKeyEvents(this);
     
-    cout << "constructed ofxuniformgui\n";
-
     showKey = 'u';
     visible = true;
 }
@@ -39,7 +36,6 @@ ofxUniformGui::~ofxUniformGui() {
             delete param;
         }
     }
-    cout << "desctructed ofxuniformgui\n";
 }
 
 ofxUniformGui* ofxUniformGui::get() {
@@ -80,8 +76,6 @@ void ofxUniformGui::addShader(const ofShader *shader, string filename) {
                 values[tokens[i]] = line.substr(matches[i].offset, matches[i].length);
             }
             
-            ofLogNotice() << line;
-            
             float min = atof(values["min"].c_str());
             float max = atof(values["max"].c_str());
             
@@ -104,14 +98,31 @@ void ofxUniformGui::addShader(const ofShader *shader, string filename) {
                     vec2Re.match(values["default"], 0, matches);
                     
                     if (matches.size() >= 3) {
-                        string smin = values["default"].substr(matches[1].offset, matches[1].length);
-                        string smax = values["default"].substr(matches[2].offset, matches[2].length);
-                        ofVec2f def(atof(smin.c_str()), atof(smax.c_str()));
+                        string vx = values["default"].substr(matches[1].offset, matches[1].length);
+                        string vy = values["default"].substr(matches[2].offset, matches[2].length);
+                        ofVec2f def(atof(vx.c_str()), atof(vy.c_str()));
                         
                         add(shader, values["name"], def, min, max);
                     }
                     else {
                         ofLogError() << "can't get default values of vec2 " << values["name"];
+                    }
+                    
+                }
+                else if (values["type"] == "vec3") {
+                    RegularExpression vec2Re("vec3\\(([0-9.]+)\\s*,\\s*([0-9.]+),\\s*([0-9.]+)\\)");
+                    vec2Re.match(values["default"], 0, matches);
+                    
+                    if (matches.size() >= 4) {
+                        string vx = values["default"].substr(matches[1].offset, matches[1].length);
+                        string vy = values["default"].substr(matches[2].offset, matches[2].length);
+                        string vz = values["default"].substr(matches[3].offset, matches[3].length);
+                        ofVec3f def(atof(vx.c_str()), atof(vy.c_str()), atof(vz.c_str()));
+                        
+                        add(shader, values["name"], def, min, max);
+                    }
+                    else {
+                        ofLogError() << "can't get default values of vec3 " << values["name"];
                     }
                     
                 }
@@ -137,22 +148,22 @@ ofParameterGroup& ofxUniformGui::getShader(string name) {
 }
 
 void ofxUniformGui::update(const ofShader *shader) {
-//    for (auto fandp : shaders) {
-//        const ofShader *shader = fandp.first;
     vector<ofAbstractParameter*> params = shaders[shader].second;
     
-        for (auto param : params) {
-            
-            string name = param->getName();
-            if (ofParameter<float> *fp = dynamic_cast< ofParameter<float>* >(param)) {
-                shader->setUniform1f(name, fp->get());
-            }
-            else if (ofParameter<ofVec2f> *v2p = dynamic_cast< ofParameter<ofVec2f>* >(param)) {
-                shader->setUniform2f(name, v2p->get());
-            }
+    for (auto param : params) {
         
+        string name = param->getName();
+        if (ofParameter<float> *fp = dynamic_cast< ofParameter<float>* >(param)) {
+            shader->setUniform1f(name, fp->get());
         }
-//    }
+        else if (ofParameter<ofVec2f> *v2p = dynamic_cast< ofParameter<ofVec2f>* >(param)) {
+            shader->setUniform2f(name, v2p->get());
+        }
+        else if (ofParameter<ofVec3f> *v3p = dynamic_cast< ofParameter<ofVec3f>* >(param)) {
+            shader->setUniform3f(name, v3p->get());
+        }
+    
+    }
 }
 
 
@@ -170,7 +181,3 @@ void ofxUniformGui::keyPressed(ofKeyEventArgs &args) {
 }
 
 void ofxUniformGui::keyReleased(ofKeyEventArgs &args) { }
-
-//void ofxUniformGui::draw() {
-//    panel.draw();
-//}
