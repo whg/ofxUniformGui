@@ -4,14 +4,12 @@
 void ofApp::setup() {
     
     
-    shader.load("blob.vert", "blob.frag");
+    shader.load("blob");
     
     for (int i = 0; i < 20; things.push_back(Thing()), i++);
     
     tex.allocate(512, 1, GL_RGB32F);
     mesh = ofMesh::plane(ofGetWidth(), ofGetHeight());
-
-    uniformGui.addShader(shader, "blob.frag");
 }
 
 
@@ -48,15 +46,9 @@ void ofApp::draw() {
 
     shader.begin();
 
-    shader.setUniform1f("time", ofGetElapsedTimef());
-    shader.setUniform2f("mouse", mouseX, mouseY);
-    shader.setUniform2f("resolution", ofGetWidth(), ofGetHeight());
-    
-    shader.setUniform1i("nblobs", things.size());
     shader.setUniformTexture("tex", tex, 0);
     shader.setUniform2f("windowSize", ofGetWidth(), ofGetHeight());
     
-    uniformGui.update();
     
     ofPushMatrix();
     ofTranslate(ofGetWidth() >> 1, ofGetHeight() >> 1);
@@ -65,13 +57,11 @@ void ofApp::draw() {
     
     shader.end();
     
-    uniformGui.draw();
-    
 }
 
 
 void ofApp::keyPressed(int key) {
-//    if (key == 'd') drawDebug ^= true;
+
 }
 
 

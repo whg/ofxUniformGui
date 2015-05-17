@@ -27,6 +27,7 @@
 		E7E077E815D3B6510020DFD4 /* QTKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E7E077E715D3B6510020DFD4 /* QTKit.framework */; };
 		E7F985F815E0DEA3003869B5 /* Accelerate.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E7F985F515E0DE99003869B5 /* Accelerate.framework */; };
 		EE2028481B054EBC00B08423 /* ofxUniformGui.cpp in Sources */ = {isa = PBXBuildFile; fileRef = EE2028461B054EBC00B08423 /* ofxUniformGui.cpp */; };
+		EE20284C1B0907DF00B08423 /* ofxUniformGuiShader.cpp in Sources */ = {isa = PBXBuildFile; fileRef = EE20284B1B0907DF00B08423 /* ofxUniformGuiShader.cpp */; };
 		EE6D15901B026178009B81EE /* ofxBaseGui.cpp in Sources */ = {isa = PBXBuildFile; fileRef = EE6D157F1B026178009B81EE /* ofxBaseGui.cpp */; };
 		EE6D15911B026178009B81EE /* ofxButton.cpp in Sources */ = {isa = PBXBuildFile; fileRef = EE6D15811B026178009B81EE /* ofxButton.cpp */; };
 		EE6D15921B026178009B81EE /* ofxGuiGroup.cpp in Sources */ = {isa = PBXBuildFile; fileRef = EE6D15841B026178009B81EE /* ofxGuiGroup.cpp */; };
@@ -93,6 +94,8 @@
 		E7F985F515E0DE99003869B5 /* Accelerate.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Accelerate.framework; path = /System/Library/Frameworks/Accelerate.framework; sourceTree = "<absolute>"; };
 		EE2028461B054EBC00B08423 /* ofxUniformGui.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ofxUniformGui.cpp; sourceTree = "<group>"; };
 		EE2028471B054EBC00B08423 /* ofxUniformGui.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ofxUniformGui.h; sourceTree = "<group>"; };
+		EE20284A1B09062300B08423 /* ofxUniformGuiShader.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ofxUniformGuiShader.h; sourceTree = "<group>"; };
+		EE20284B1B0907DF00B08423 /* ofxUniformGuiShader.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ofxUniformGuiShader.cpp; sourceTree = "<group>"; };
 		EE6D15711AFD0FA3009B81EE /* blob.frag */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.glsl; name = blob.frag; path = bin/data/blob.frag; sourceTree = SOURCE_ROOT; };
 		EE6D15721AFD0FA3009B81EE /* blob.vert */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.glsl; name = blob.vert; path = bin/data/blob.vert; sourceTree = SOURCE_ROOT; };
 		EE6D157F1B026178009B81EE /* ofxBaseGui.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ofxBaseGui.cpp; sourceTree = "<group>"; };
@@ -235,6 +238,8 @@
 			children = (
 				EE2028461B054EBC00B08423 /* ofxUniformGui.cpp */,
 				EE2028471B054EBC00B08423 /* ofxUniformGui.h */,
+				EE20284A1B09062300B08423 /* ofxUniformGuiShader.h */,
+				EE20284B1B0907DF00B08423 /* ofxUniformGuiShader.cpp */,
 			);
 			name = src;
 			path = ../src;
@@ -373,6 +378,7 @@
 				E4B69E200A3A1BDC003C02F2 /* main.cpp in Sources */,
 				EE6D15901B026178009B81EE /* ofxBaseGui.cpp in Sources */,
 				E4B69E210A3A1BDC003C02F2 /* ofApp.cpp in Sources */,
+				EE20284C1B0907DF00B08423 /* ofxUniformGuiShader.cpp in Sources */,
 				EE6D15941B026178009B81EE /* ofxPanel.cpp in Sources */,
 				EE6D15911B026178009B81EE /* ofxButton.cpp in Sources */,
 				EE6D15951B026178009B81EE /* ofxSlider.cpp in Sources */,

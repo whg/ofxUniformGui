@@ -3,7 +3,7 @@
 #include "ofMain.h"
 #include "ofxGui.h"
 
-#include "ofxUniformGui.h"
+#include "ofxUniformGuiShader.h"
 
 struct Thing {
     ofVec2f pos, vel;
@@ -38,8 +38,7 @@ public:
     void dragEvent(ofDragInfo dragInfo);
     void gotMessage(ofMessage msg);
     
-    ofShader shader;
-    ofxUniformGui uniformGui;
+    ofxUniformGuiShader shader;
     
     vector<Thing> things;
     ofTexture tex;
