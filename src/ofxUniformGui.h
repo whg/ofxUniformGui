@@ -7,29 +7,43 @@
 
 #include "ofxGui.h"
 
-
 class ofxUniformGui {
 public:
     ofxUniformGui();
+    ~ofxUniformGui();
     
     ofxPanel panel;
         
-    void addShader(ofShader &shader, string filename);
+    void addShader(const ofShader *shader, string filename);
     
     ofParameterGroup& getShader(string name);
     
-    map<string, std::pair<ofShader*, vector<ofAbstractParameter*> > > shaders;
+    map<const ofShader*, std::pair<string, vector<ofAbstractParameter*> > > shaders;
 //    map<string, vector<ofAbstractParameter*> > params;
 
 
     template <typename T>
-    void add(string filename, string name, T defaultValue, float min, float max) {
-        shaders[filename].second.push_back(new ofParameter<T>(name, defaultValue, T(min), T(max)));
+    void add(const ofShader *shader, string name, T defaultValue, float min, float max) {
+        shaders[shader].second.push_back(new ofParameter<T>(name, defaultValue, T(min), T(max)));
     }
     
     
-    
-    void update();
-    void draw();
+    static ofxUniformGui* get();
+//    static shared_ptr<ofxUniformGui> get();
 
+    void draw(ofEventArgs &args);
+    void exit(ofEventArgs &args);
+    void keyPressed(ofKeyEventArgs &args);
+    void keyReleased(ofKeyEventArgs &args);
+
+    void update(const ofShader *shader);
+
+
+    void setVisible(bool v) { visible = v; }
+    void show() { setVisible(true); }
+    void hide() { setVisible(false); }
+    
+protected:
+    char showKey;
+    bool visible;
 };

@@ -11,16 +11,55 @@
 
 using Poco::RegularExpression;
 
+// it would be nice if a shared_ptr would work here, but I can't manage to stop ~ofxPanel from
+// crashing when we destruct ofxUniformGui
+
+static ofxUniformGui *uniformGui = NULL;
+//shared_ptr<ofxUniformGui> uniformGui;
 
 ofxUniformGui::ofxUniformGui() {
     panel.setup("Shader Uniforms");
+    
+//
+    ofAddListener(ofEvents().draw, this, &ofxUniformGui::draw);
+    ofAddListener(ofEvents().exit, this, &ofxUniformGui::exit);
+    ofRegisterKeyEvents(this);
+    
+    cout << "constructed ofxuniformgui\n";
+
+    showKey = 'u';
+    visible = true;
 }
 
-void ofxUniformGui::addShader(ofShader &shader, string filename) {
+ofxUniformGui::~ofxUniformGui() {
+    for (auto fandp : shaders) {
+        vector<ofAbstractParameter*> params = fandp.second.second;
+        
+        for (auto param : params) {
+            delete param;
+        }
+    }
+    cout << "desctructed ofxuniformgui\n";
+}
+
+ofxUniformGui* ofxUniformGui::get() {
+    if (!uniformGui) {
+        uniformGui = new ofxUniformGui;
+    }
+    return uniformGui;
+}
+
+void ofxUniformGui::exit(ofEventArgs &args) {
+    if (uniformGui) {
+        delete uniformGui;
+    }
+}
+
+void ofxUniformGui::addShader(const ofShader *shader, string filename) {
     
     ofFile file(filename);
     
-    shaders[filename].first = &shader;
+    shaders[shader].first = filename;
     
     static string tokens[] = { "line", "type", "name", "default", "min", "max" };
     static int NTOKENS = 6;
@@ -52,11 +91,11 @@ void ofxUniformGui::addShader(ofShader &shader, string filename) {
             
                 if (values["type"] == "int") {
                     int def = atoi(values["default"].c_str());
-                    add(filename, values["name"], def, min, max);
+                    add(shader, values["name"], def, min, max);
                 }
                 else if (values["type"] == "float") {
                     float def = atof(values["default"].c_str());
-                    add(filename, values["name"], def, min, max);
+                    add(shader, values["name"], def, min, max);
                 }
             }
             else {
@@ -69,7 +108,7 @@ void ofxUniformGui::addShader(ofShader &shader, string filename) {
                         string smax = values["default"].substr(matches[2].offset, matches[2].length);
                         ofVec2f def(atof(smin.c_str()), atof(smax.c_str()));
                         
-                        add(filename, values["name"], def, min, max);
+                        add(shader, values["name"], def, min, max);
                     }
                     else {
                         ofLogError() << "can't get default values of vec2 " << values["name"];
@@ -83,11 +122,10 @@ void ofxUniformGui::addShader(ofShader &shader, string filename) {
         }
     }
     
-
     ofParameterGroup paramGroup;
     paramGroup.setName(filename);
 
-    for (auto param : shaders[filename].second) {
+    for (auto param : shaders[shader].second) {
         paramGroup.add(*param);
     }
     panel.add(paramGroup);
@@ -98,11 +136,11 @@ ofParameterGroup& ofxUniformGui::getShader(string name) {
     
 }
 
-void ofxUniformGui::update() {
-    for (auto fandp : shaders) {
-        ofShader *shader = fandp.second.first;
-        vector<ofAbstractParameter*> params = fandp.second.second;
-        
+void ofxUniformGui::update(const ofShader *shader) {
+//    for (auto fandp : shaders) {
+//        const ofShader *shader = fandp.first;
+    vector<ofAbstractParameter*> params = shaders[shader].second;
+    
         for (auto param : params) {
             
             string name = param->getName();
@@ -114,9 +152,25 @@ void ofxUniformGui::update() {
             }
         
         }
+//    }
+}
+
+
+void ofxUniformGui::draw(ofEventArgs &args) {
+    if (visible) {
+        panel.draw();
     }
 }
 
-void ofxUniformGui::draw() {
-    panel.draw();
+void ofxUniformGui::keyPressed(ofKeyEventArgs &args) {
+    if (args.key == int(showKey)) {
+        visible ^= true;
+    }
+    
 }
+
+void ofxUniformGui::keyReleased(ofKeyEventArgs &args) { }
+
+//void ofxUniformGui::draw() {
+//    panel.draw();
+//}
