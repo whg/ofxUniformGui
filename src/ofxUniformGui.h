@@ -15,9 +15,7 @@ public:
     ofxPanel panel;
         
     void addShader(const ofShader *shader, string filename);
-    
-    ofParameterGroup& getShader(string name);
-    
+        
     map<const ofShader*, std::pair<string, vector<ofAbstractParameter*> > > shaders;
 
     template <typename T>

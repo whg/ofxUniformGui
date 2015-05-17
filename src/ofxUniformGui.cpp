@@ -133,19 +133,20 @@ void ofxUniformGui::addShader(const ofShader *shader, string filename) {
         }
     }
     
-    ofParameterGroup paramGroup;
-    paramGroup.setName(filename);
+    if (!shaders[shader].second.empty()) {
 
-    for (auto param : shaders[shader].second) {
-        paramGroup.add(*param);
+        ofParameterGroup paramGroup;
+        paramGroup.setName(filename);
+        
+        for (auto param : shaders[shader].second) {
+            paramGroup.add(*param);
+        }
+        
+        panel.add(paramGroup);
     }
-    panel.add(paramGroup);
 
 }
 
-ofParameterGroup& ofxUniformGui::getShader(string name) {
-    
-}
 
 void ofxUniformGui::update(const ofShader *shader) {
     vector<ofAbstractParameter*> params = shaders[shader].second;
