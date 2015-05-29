@@ -51,7 +51,7 @@ void ofxUniformGui::exit(ofEventArgs &args) {
     }
 }
 
-void ofxUniformGui::addShader(const ofShader *shader, string filename) {
+void ofxUniformGui::addShader(ofShader *shader, string filename) {
     
     ofFile file(filename);
     
@@ -148,7 +148,7 @@ void ofxUniformGui::addShader(const ofShader *shader, string filename) {
 }
 
 
-void ofxUniformGui::update(const ofShader *shader) {
+void ofxUniformGui::update(ofShader *shader) {
     vector<ofAbstractParameter*> params = shaders[shader].second;
     
     for (auto param : params) {

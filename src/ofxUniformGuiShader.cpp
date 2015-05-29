@@ -18,19 +18,23 @@ bool ofxUniformGuiShader::load(string vertName, string fragName, string geomName
     
     ofxUniformGui *ug = ofxUniformGui::get();
     
-    ug->addShader(const_cast<ofxUniformGuiShader*>(this), vertName);
-    ug->addShader(const_cast<ofxUniformGuiShader*>(this), fragName);
+    ug->addShader(this, vertName);
+    ug->addShader(this, fragName);
     
     if (geomName.empty() == false) {
-        ug->addShader(const_cast<ofxUniformGuiShader*>(this), vertName);
+        ug->addShader(this, vertName);
     }
     
     return ofShader::load(vertName, fragName, geomName);
 }
 
+#if (OF_VERSION_MINOR== 8 && OF_VERSION_PATCH >= 4) || OF_VERSION_MAJOR > 8
 void ofxUniformGuiShader::begin() const {
+#else
+void ofxUniformGuiShader::begin() {
+#endif
     
     ofShader::begin();
     
-    ofxUniformGui::get()->update(const_cast<ofxUniformGuiShader*>(this));
+    ofxUniformGui::get()->update((ofShader*)this);
 }

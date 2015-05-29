@@ -12,7 +12,7 @@ public:
     ofxUniformGui();
     ~ofxUniformGui();
     
-    void addShader(const ofShader *shader, string filename);
+    void addShader(ofShader *shader, string filename);
     
     static ofxUniformGui* get();
 
@@ -21,7 +21,7 @@ public:
     void keyPressed(ofKeyEventArgs &args);
     void keyReleased(ofKeyEventArgs &args);
 
-    void update(const ofShader *shader);
+    void update(ofShader *shader);
 
     void setVisible(bool v) { visible = v; }
     void show() { setVisible(true); }
@@ -37,10 +37,10 @@ protected:
     
     
 protected:
-    map<const ofShader*, std::pair<string, vector<ofAbstractParameter*> > > shaders;
+    map<ofShader*, std::pair<string, vector<ofAbstractParameter*> > > shaders;
     
     template <typename T>
-    void add(const ofShader *shader, string name, T defaultValue, float min, float max) {
+    void add(ofShader *shader, string name, T defaultValue, float min, float max) {
         shaders[shader].second.push_back(new ofParameter<T>(name, defaultValue, T(min), T(max)));
     }
 
