@@ -12,20 +12,9 @@ public:
     ofxUniformGui();
     ~ofxUniformGui();
     
-    ofxPanel panel;
-        
     void addShader(const ofShader *shader, string filename);
-        
-    map<const ofShader*, std::pair<string, vector<ofAbstractParameter*> > > shaders;
-
-    template <typename T>
-    void add(const ofShader *shader, string name, T defaultValue, float min, float max) {
-        shaders[shader].second.push_back(new ofParameter<T>(name, defaultValue, T(min), T(max)));
-    }
-    
     
     static ofxUniformGui* get();
-//    static shared_ptr<ofxUniformGui> get();
 
     void draw(ofEventArgs &args);
     void exit(ofEventArgs &args);
@@ -34,12 +23,25 @@ public:
 
     void update(const ofShader *shader);
 
-
     void setVisible(bool v) { visible = v; }
     void show() { setVisible(true); }
     void hide() { setVisible(false); }
     
+    void setShowKey(char k) { showKey = k; }
+    
 protected:
+    ofxPanel panel;
+
     char showKey;
     bool visible;
+    
+    
+protected:
+    map<const ofShader*, std::pair<string, vector<ofAbstractParameter*> > > shaders;
+    
+    template <typename T>
+    void add(const ofShader *shader, string name, T defaultValue, float min, float max) {
+        shaders[shader].second.push_back(new ofParameter<T>(name, defaultValue, T(min), T(max)));
+    }
+
 };

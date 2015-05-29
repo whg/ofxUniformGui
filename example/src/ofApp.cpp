@@ -1,5 +1,5 @@
 #include "ofApp.h"
-
+#include "ofxUniformGui.h"
 
 void ofApp::setup() {
     
@@ -10,6 +10,9 @@ void ofApp::setup() {
     
     tex.allocate(512, 1, GL_RGB32F);
     mesh = ofMesh::plane(ofGetWidth(), ofGetHeight());
+    
+    ofxUniformGui::get()->setShowKey('s');
+
 }
 
 
@@ -56,6 +59,7 @@ void ofApp::draw() {
     ofPopMatrix();
     
     shader.end();
+    
     
 }
 

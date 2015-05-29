@@ -23,7 +23,7 @@ void main() {
 
     float dist = 0.0;
     
-    for(int i = 0; i < 10 ; i++){
+    for(int i = 0; i < 20 ; i++){
         
         vec2 p = vec2(float(i) + 0.5, 0.0);
        
@@ -37,5 +37,5 @@ void main() {
 
     float v = smoothstep(distEdges.x, distEdges.y, dist);
 
-    gl_FragColor = vec4(vec3(0.0), v);
+    gl_FragColor = vec4(vec3(v), 1.0);
 }

@@ -15,7 +15,6 @@ bool ofxUniformGuiShader::load(string shaderName) {
 }
 
 bool ofxUniformGuiShader::load(string vertName, string fragName, string geomName) {
-    cout << "loaded ofxUniformGuiShader" << endl;
     
     ofxUniformGui *ug = ofxUniformGui::get();
     
