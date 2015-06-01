@@ -158,10 +158,18 @@ void ofxUniformGui::update(ofShader *shader) {
             shader->setUniform1f(name, fp->get());
         }
         else if (ofParameter<ofVec2f> *v2p = dynamic_cast< ofParameter<ofVec2f>* >(param)) {
+#if OF_VERSION_MAJOR > 8
             shader->setUniform2f(name, v2p->get());
+#else
+            shader->setUniform2f(name, v2p->get().x, v2p->get().y);
+#endif
         }
         else if (ofParameter<ofVec3f> *v3p = dynamic_cast< ofParameter<ofVec3f>* >(param)) {
+#if OF_VERSION_MAJOR > 8
             shader->setUniform3f(name, v3p->get());
+#else
+            shader->setUniform3f(name, v3p->get().x, v3p->get().y, v3p->get().z);
+#endif
         }
     
     }

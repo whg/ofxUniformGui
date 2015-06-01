@@ -28,7 +28,7 @@ bool ofxUniformGuiShader::load(string vertName, string fragName, string geomName
     return ofShader::load(vertName, fragName, geomName);
 }
 
-#if (OF_VERSION_MINOR== 8 && OF_VERSION_PATCH >= 4) || OF_VERSION_MAJOR > 8
+#if OF_VERSION_MAJOR > 8
 void ofxUniformGuiShader::begin() const {
 #else
 void ofxUniformGuiShader::begin() {
