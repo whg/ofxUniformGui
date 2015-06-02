@@ -31,3 +31,6 @@ ofxUniformGui::get()->setVisible(true);
 ofxUniformGui::get()->setShowKey('s');
 ```
 
+### Platforms
+
+Tested on OSX 10.9, should work on all platforms.
